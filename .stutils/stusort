@@ -1,5 +1,8 @@
 #!/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python
 
+# This is a slightly modified version of the most splinded file created
+# by Jimmy Ruska - for details see below:
+
 # By Jimmy Ruska
 # Sorts Desktop and Downloads folder by extension.
 # Made for easy modification. Tested: Windows/Ubuntu Python 2.7, 3.2.
