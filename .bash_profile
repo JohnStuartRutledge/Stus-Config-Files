@@ -25,6 +25,10 @@
 # quickly rename a file
 # >>> mv filename.{old,new}
 
+# set ARCHFLAGS
+# as per advice here: https://github.com/zeromq/pyzmq/issues/105
+ARCHFLAGS="-arch i386 -arch x86_64"
+
 
 # ignore backups, CVS directories, python bytecode,
 # and vim swap files for bash's autocompletion

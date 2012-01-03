@@ -7,9 +7,11 @@ call pathogen#helptags()
 set number                " turn on line numbers
 set foldmethod=indent
 set foldlevel=99
+set nocompatible          " forget about being vi compatible
 set background=dark
 set autoindent
 set tabstop=4
+set softtabstop=4
 set expandtab
 set shiftwidth=4
 set ruler
