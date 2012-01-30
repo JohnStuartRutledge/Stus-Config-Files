@@ -9,6 +9,9 @@
 ### NOTES
 ###-------------------------------
 
+# cd into directory your using which on
+# cd "$(dirname $(which python))"
+
 # run previous command but w/ replacment
 # >>> ^foo^bar
 #
@@ -25,10 +28,11 @@
 # quickly rename a file
 # >>> mv filename.{old,new}
 
+###-------------------------------
+
 # set ARCHFLAGS
 # as per advice here: https://github.com/zeromq/pyzmq/issues/105
 ARCHFLAGS="-arch i386 -arch x86_64"
-
 
 # ignore backups, CVS directories, python bytecode,
 # and vim swap files for bash's autocompletion
@@ -83,7 +87,7 @@ function watchcoffee(){
 
 # download a website into a PDF
 makepdf(){
-wget $URL | htmldoc --webpage -f "$URL".pdf - ; xpdf "$URL".pdf &
+    wget $URL | htmldoc --webpage -f "$URL".pdf - ; xpdf "$URL".pdf &
 }
 
 # Bash snippet to open new shells in most recently visited dir
@@ -110,11 +114,29 @@ function mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 # Example: >>> zip filename
 function zip () { command sudo ditto -c -k -rsrc "$0" "$0.zip"; }
 
+###-------------------------------
+###  DJANGO SETTINGS FIX
+###-------------------------------
+
+function setdsm() {
+    # add the current directory and the parent directory to PYTHONPATH
+    # sets DJANGO_SETTINGS_MODULE
+    export PYTHONPATH=$PYTHONPATH:$PWD/..
+    export PYTHONPATH=$PYTHONPATH:$PWD
+    if [ -z "$1" ]; then 
+        x=${PWD/\/[^\/]*\/}
+        export DJANGO_SETTINGS_MODULE=$x.settings
+    else    
+        export DJANGO_SETTINGS_MODULE=$1
+    fi
+    echo "DJANGO_SETTINGS_MODULE set to $DJANGO_SETTINGS_MODULE"
+}
 
 ###-------------------------------
 ###  DEFAULT EDITORS
 ###-------------------------------
 
+# make vim your default editor
 # export EDITOR='/Users/stu/bin/vim'
 
 # make TextMate your default editor
@@ -123,6 +145,8 @@ export EDITOR='mate -w'
 # press 'v' in less and it should open the current file in textmate
 export LESSEDIT='mate -l %lm %f'
 
+# make macvim's more updated copy your default vim
+alias vim='mvim -v'
 
 ###-------------------------------
 ###  ALIASES
@@ -141,6 +165,7 @@ alias lld='ls -lUd */'  #list directories
 alias lsa='ls -alhp'
 
 # Git aliases
+alias git=hub           # make git, github aware
 alias gs='git status'
 alias gb='git branch'
 alias gu='git up'
@@ -153,7 +178,6 @@ alias gpl='git pull'
 alias gp='git push'
 alias gl='git log'
 alias ga='git add'
-
 
 # misc aliases
 alias kp='ps auxwww'
@@ -191,11 +215,6 @@ alias rm='rm -iv'
 alias cp='cp -iv'
 alias mv='mv -iv'
 
-# Django aliases
-alias dj='python manage.py'
-alias djr='python manage.py runserver'
-
-
 # keeps you from overwriting original
 # when redirecting output to a file.
 set -o noclobber
@@ -215,76 +234,74 @@ export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 # export TERM=xterm-256color
 
+alias pipup="pip install --upgrade"
+
+# Django aliases
+alias dj='python manage.py'
+alias djr='python manage.py runserver'
+alias djplus='python manage.py runserver_plus'
+
 # add shortcut to ruby gems directory
 alias gems='cd /Library/Ruby/Gems/1.8/gems/'
 
 # add shortcut to python site-packages directory
 alias sitepackages='cd /opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/'
 
-###-------------------------------
-###  macports && darwinports
-###-------------------------------
+# set ipython special settings
+alias mypython='ipython qtconsole --colors=linux --ConsoleWidget.font_family="Liberation Mono" --ConsoleWidget.font_size=12'
 
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:${PATH}"
-
-# MacPorts Installer addition on 2011-01-06_at_16:31:19: PATH to macports 
-export PATH="/opt/local/bin:/opt/local/sbin:{$PATH}"
-
-# Setting PATH for MacPython 2.7
-# PATH="/Library/Frameworks/Python.framework/Versions/2.6/bin:${PATH}"
 
 ###-------------------------------
-###  misc command line programs
+###  DEFAULT PATHS
 ###-------------------------------
-
-# Add my personal utilties files
-export PATH="~/.stutils:${PATH}"
-
-# Add TSVutils script for parsing various files into TSV file format
-export PATH="/Users/stu/.TSVutils:${PATH}"
-
-# PATH to numenta
-# NTA=$HOME/nta/current
-# export PATH=$NTA/bin:$PATH
-# export PYTHONPATH=$NTA/lib/python2.5/site-packages:$PYTHONPATH
-
-###------------------------------
-###  node.js
-###------------------------------
-export NODE_PATH="/usr/local/lib/node"
-export PATH="/usr/local/share/npm/bin:${PATH}"
-
-###-------------------------------
-###  ruby paths below
-###-------------------------------
-export PATH="/Users/stu/.gem/ruby/1.8/bin:${PATH}"
-
-###-------------------------------
-###  python paths below
-###-------------------------------
-# setting the PATH for MY local executable directory
-export PATH="/Users/stu/bin:${PATH}"
-
-# setting the PATH for MY Local Python modules directory
-export PATH="/Users/stu/usr/lib/python2.6/site-packages:${PATH}"
-
-# PATH to python 2.6
-#export PATH="/Library/Frameworks/Python.framework/Versions/2.6/bin:${PATH}"
 
 # PATH to python 2.7
-export PATH="/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+PATH="/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin"
 export PYTHONPATH='/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin'
+
+# path to ruby
+export PATH="${PATH}:/Users/stu/.gem/ruby/1.8/bin"
+
+# paths to node.js
+export NODE_PATH="/usr/local/lib/node"
+export PATH="${PATH}:/usr/local/share/npm/bin"
+
+# macports paths
+export PATH="${PATH}:/opt/local/bin:/opt/local/sbin"
+
+# root paths
+export PATH="${PATH}:/bin:/sbin:/usr/bin:/usr/sbin"
+
+# local paths
+export PATH="${PATH}:/usr/local/bin:/usr/local/sbin"
+
+# home directory / personal paths
+export PATH="${PATH}:/Users/stu/bin"
+
+# path to mysql
+export PATH="${PATH}:/usr/local/mysql/bin"
+
+# path to postgresql
+export PATH="${PATH}:/Library/PostgreSQL/9.1/bin"
+
+# Add my personal utilties files
+export PATH="${PATH}:/Users/stu/.stutils"
+
+# Add TSVutils script for parsing various files into TSV file format
+export PATH="${PATH}:/Users/stu/.TSVutils"
+
 
 ###------------------------------
 ###  virtualenv wrapper
 ###-------------------------------
-
 # it must be exported after your PYTHON path
 # otherwise it will draw from default directory
 
-export WORKON_HOME=$HOME/Projects/virtualenvs
-# source '/usr/local/bin/virtualenvwrapper.sh'
+export WORKON_HOME=$HOME/Envs
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
 source '/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh'
+ 
+# export VIRTUALENVWRAPPER_PYTHON="/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh"
 
 export DYLD_FALLBACK_LIBRARY_PATH="/opt/local/lib"
 
