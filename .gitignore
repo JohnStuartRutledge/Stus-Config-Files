@@ -1,3 +1,5 @@
+## NOTE - that this git ignore file first ignores everything
+##        then it sets the files that it doesn't want to ignore.
 /*
 !.gitignore
 !.bash_profile
@@ -5,4 +7,3 @@
 !.stutils/
 !.vim/
 !.vimrc
-!.DS_Store
