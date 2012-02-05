@@ -176,7 +176,7 @@ alias gc='git commit -v'
 alias gd='git diff | $EDITOR'
 alias gpl='git pull'
 alias gp='git push'
-alias gl='git log'
+alias gl='git log --decorate --graph'
 alias ga='git add'
 
 # misc aliases
