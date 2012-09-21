@@ -3,7 +3,7 @@
 ###                   STUS BASH PREFERENCES                      ###
 ###--------------------------------------------------------------###
 ###--------------------------------------------------------------###
-
+alias fever='cd /Users/stu/Envs/dev/webapps/ifever/myproject/'
 
 ###-------------------------------
 ### NOTES
@@ -77,9 +77,21 @@ function stuhelp(){
 # them to javascript whenever you save them.
 # The commands single argument is the path
 # you want your js files to output to.
+# >>> watchcoffee ~/Desktop
 function watchcoffee(){
     coffee -wc -o . -c "$1";
 }
+
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+	local port="${1:-8000}"
+	open "http://localhost:${port}/"
+	# Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+	# And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
 
 #!/bin/bash --posix 
 #tee /tmp/stu_tmp.html 
@@ -140,7 +152,9 @@ function setdsm() {
 # export EDITOR='/Users/stu/bin/vim'
 
 # make TextMate your default editor
-export EDITOR='mate -w'
+# export EDITOR='mate -w'
+# export EDITOR='mvim -v'
+export EDITOR='subl -w'
 
 # press 'v' in less and it should open the current file in textmate
 export LESSEDIT='mate -l %lm %f'
@@ -151,6 +165,8 @@ alias vim='mvim -v'
 ###-------------------------------
 ###  ALIASES
 ###-------------------------------
+
+alias sudo='sudo '      # allows you to pass aliases to sudo
 
 # navigation aliases
 alias cd..='cd ..'
@@ -234,7 +250,9 @@ export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 # export TERM=xterm-256color
 
+# Pip aliases
 alias pipup="pip install --upgrade"
+alias pipupall="sudo -H pip freeze --local | cut -d = -f 1 | xargs pip install -U"
 
 # Django aliases
 alias dj='python manage.py'
@@ -261,6 +279,9 @@ export PYTHONPATH='/opt/local/Library/Frameworks/Python.framework/Versions/2.7/b
 
 # path to ruby
 export PATH="${PATH}:/Users/stu/.gem/ruby/1.8/bin"
+
+# path to Go
+export PATH="${PATH}:/usr/local/go/bin"
 
 # paths to node.js
 export NODE_PATH="/usr/local/lib/node"
@@ -289,7 +310,6 @@ export PATH="${PATH}:/Users/stu/.stutils"
 
 # Add TSVutils script for parsing various files into TSV file format
 export PATH="${PATH}:/Users/stu/.TSVutils"
-
 
 ###------------------------------
 ###  virtualenv wrapper

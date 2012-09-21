@@ -8,6 +8,14 @@
 " by Hamish Stuart Macpherson
 "
 
+" neon blue  - #82E0F2
+" neon pink  - #FB0F93
+" neon green - #A6E22E 
+" purple     - #AE81FF
+" yellow     - #E6DB74
+" orange     - #FD971F
+" gray       - #5c7176
+
 hi clear
 
 set background=dark
@@ -39,7 +47,7 @@ hi Delimiter       guifg=#8F8F8F
 hi Float           guifg=#AE81FF
 hi Function        guifg=#A6E22E
 hi Identifier      guifg=#FD971F
-hi Builtin         guifg=#AE81FF               gui=bold
+hi Builtin         guifg=#82E0F2               gui=bold
 " }}}
 " Diffs {{{
 hi DiffAdd                       guibg=#0F1D0B
@@ -94,7 +102,8 @@ hi Repeat          guifg=#F92672               gui=bold
 hi IndentGuides                  guibg=#373737
 hi SignColumn      guifg=#A6E22E guibg=#151617
 hi SpecialChar     guifg=#F92672               gui=bold
-hi SpecialComment  guifg=#465457               gui=bold
+" hi SpecialComment  guifg=#465457               gui=bold
+hi SpecialComment  guifg=#FFF000               gui=bold
 hi Special         guifg=#66D9EF guibg=bg      gui=italic
 hi SpecialKey      guifg=#888A85               gui=italic
 hi Statement       guifg=#F92672               gui=bold
@@ -145,7 +154,7 @@ if &t_Co > 255
    hi Debug           ctermfg=225               cterm=bold
    hi Define          ctermfg=81
    hi Delimiter       ctermfg=241
-   hi Builtin         ctermfg=135               cterm=bold
+   hi Builtin         ctermfg=81                cterm=bold
 
    hi EasyMotionTarget ctermfg=11
    hi EasyMotionShade  ctermfg=8
@@ -224,7 +233,7 @@ if &t_Co > 255
    " Not sure if this color with underlined was defined already
    " but I added it for the definition of a class that is a 
    " subclass.
-   hi InheritUnderlined      ctermfg=118               cterm=underline
+   hi InheritUnderlined      ctermfg=118        cterm=underline
 
    hi VertSplit       ctermfg=244 ctermbg=232   cterm=bold
    hi VisualNOS                   ctermbg=238

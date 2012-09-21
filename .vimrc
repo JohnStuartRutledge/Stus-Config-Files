@@ -208,6 +208,8 @@ nmap <leader>al :left<CR>
 nmap <leader>ar :right<CR>
 nmap <leader>ac :center<CR>
 
+" Command to convert a markdown file to HTML
+nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
 
 "--------------------------------------------------------------------------- 
 " Add syntax highlighting to JSON files
